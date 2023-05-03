@@ -1,11 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 
+
+
 export default function NumberBaseball() {
   let answerNumber: number[] = [];
 
   const [startButtonState, setStartButtonState] = useState<boolean>(true);
   const [inputNumber, setInputNumber] = useState<string>("");
+  const [userNumber, setUserNumber] = useState<string[]>([]);
 
   const handleOnChangeInputNumber = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -15,9 +18,11 @@ export default function NumberBaseball() {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      if (inputNumber.length === 3) {
+      if (inputNumber.length === 3 && !isNaN(Number(inputNumber))) {
+        setUserNumber([...userNumber, inputNumber])
+        console.log(userNumber);
       } else {
-        alert("3개의 수만 입력할 수 있습니다.");
+        alert("3개의 정수만 입력할 수 있습니다.");
       }
     }
   };
@@ -47,7 +52,13 @@ export default function NumberBaseball() {
         value={inputNumber}
         onChange={handleOnChangeInputNumber}
         onKeyDown={handleKeyDown}
+        startButtonState={startButtonState}
       ></NumberInput>
+
+      {userNumber.map((number, index) => 
+        <div key={index}>{number}</div>
+      )}
+
     </Wrapper>
   );
 }
@@ -65,6 +76,7 @@ const StartButton = styled.button<{ startButtonState: boolean }>`
   cursor: pointer;
 `;
 
-const NumberInput = styled.input`
+const NumberInput = styled.input<{ startButtonState: boolean }>`
+  display: ${(props) => props.startButtonState === true ? "none" : ""};
   width: 500px;
 `;
