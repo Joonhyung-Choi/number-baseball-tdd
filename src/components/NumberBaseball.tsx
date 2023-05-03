@@ -39,6 +39,8 @@ export default function NumberBaseball() {
     setStartButtonState(false);
   };
 
+  //이제 입력받은 수와 정답을 비교하여 스트라이크, 볼, 아웃을 구분하는 알고리즘 만들면 될듯?
+
   return (
     <Wrapper>
       <StartButton
@@ -56,7 +58,12 @@ export default function NumberBaseball() {
       ></NumberInput>
 
       {userNumber.map((number, index) => 
-        <div key={index}>{number}</div>
+        <div key={index}>
+          <p>try{index + 1}</p>
+          <p>{number}</p>
+          <br/>
+
+          </div>
       )}
 
     </Wrapper>
