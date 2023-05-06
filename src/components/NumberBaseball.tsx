@@ -25,6 +25,7 @@ export default function NumberBaseball() {
       } else {
         alert("9회를 초과했습니다.");
       }
+      setInputNumber("");
     }
   };
 
@@ -83,13 +84,23 @@ export default function NumberBaseball() {
         <ResultWrapper startButtonState={startButtonState}>
           {userNumber.map((number, index) => (
             <ResultDiv key={index}>
-              <p>try{index + 1}</p>
-              <p>{number}</p>
-              <p>
-                {makeResultJudgemnet(number).strikeCount}스트라이크
-                {makeResultJudgemnet(number).ballCount}볼
-                {makeResultJudgemnet(number).outCount}아웃
-              </p>
+              <ResultInnerDiv>
+                {makeResultJudgemnet(number).strikeCount === 3
+                  ? "정답입니다!"
+                  : index + 1 + "회"}
+              </ResultInnerDiv>
+              <ResultInnerDiv>
+                {makeResultJudgemnet(number).strikeCount === 3
+                  ? `시도 횟수 : ${userNumber.length}회`
+                  : number}
+              </ResultInnerDiv>
+              <ResultInnerDiv>
+                {makeResultJudgemnet(number).strikeCount === 3
+                  ? `정답 : ${answerNumberState[0]}${answerNumberState[1]}${answerNumberState[2]}`
+                  : `${makeResultJudgemnet(number).strikeCount}스트라이크
+                  ${makeResultJudgemnet(number).ballCount}볼
+                  ${makeResultJudgemnet(number).outCount}아웃`}
+              </ResultInnerDiv>
             </ResultDiv>
           ))}
         </ResultWrapper>
@@ -139,9 +150,20 @@ const ResultWrapper = styled.div<{ startButtonState: boolean }>`
 `;
 
 const ResultDiv = styled.div`
-  height: 100px;
+  background-color: black;
+  height: 150px;
   width: 100%;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
+`;
+
+const ResultInnerDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+  color: white;
 `;
 
 const InputDiv = styled.div`
@@ -161,4 +183,11 @@ const NumberInput = styled.input<{ startButtonState: boolean }>`
   display: ${(props) => (props.startButtonState === true ? "none" : "")};
   width: 85%;
   height: 30px;
+`;
+
+const ResultDiv2 = styled.div`
+  background-color: black;
+  height: 150px;
+  width: 100%;
+  border-bottom: 1px solid white;
 `;
